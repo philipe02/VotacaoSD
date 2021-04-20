@@ -6,7 +6,8 @@ UDP_PORT = 5005
 sock = socket.socket(socket.AF_INET,  # Internet
                      socket.SOCK_DGRAM)  # UDP
 sock.bind((UDP_IP, UDP_PORT))
-candidatos = {'Mônica': 0, 'Cebolinha': 0, 'Magali': 0}
+candidatos = {'Philipe': 0, 'Nathalie': 0,
+              'Andreza': 0, 'Isaque': 0, 'Priscila': 0}
 
 while True:
     # recebe qual cliente está realizando a operação
