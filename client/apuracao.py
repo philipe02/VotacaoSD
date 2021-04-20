@@ -27,25 +27,32 @@ sock.sendto(b"Candidatos", addr)
 data, addr = sock.recvfrom(1024)
 candidatos = pickle.loads(data)
 print(*candidatos)
-candidato = input(
-    'Para exibir o voto de todos os candidatos digite "Todos", ou o nome do candidato para mostrar os votos individuais.\n')
+while True:
+    candidato = input(
+        'Para exibir o voto de todos os candidatos digite "Todos", ou o nome do candidato para mostrar os votos individuais.\n')
 
-# envia mensagem solicitando votos de um candidato específico ou todos
+    # envia mensagem solicitando votos de um candidato específico ou todos
 
-sock.sendto(candidato.encode('utf-8'), addr)
+    sock.sendto(candidato.encode('utf-8'), addr)
 
-# recebe a informação dos votos
+    # recebe a informação dos votos
 
-data, addr = sock.recvfrom(1024)
-try:
-    votos = pickle.loads(data)
-    votosCandidatos = ""
-    for i in votos:
-        votosCandidatos += ('\n{} recebeu {} votos!'.format(i, votos[i]))
-    print(votosCandidatos)
-except:
-    votos = data.decode('utf-8')
-    print(votos)
+    data, addr = sock.recvfrom(1024)
+    try:
+        votos = pickle.loads(data)
+        votosCandidatos = ""
+        for i in votos:
+            votosCandidatos += ('\n{} recebeu {} votos!'.format(i,
+                                votos[i]))
+        print(votosCandidatos)
+        break
+    except:
+        votos = data.decode('utf-8')
+        if 'inválida' in votos:
+            print(votos)
+        else:
+            print(votos)
+            break
 
 # envia mensagem confirmando sucesso em apuração
 

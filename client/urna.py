@@ -27,15 +27,20 @@ sock.sendto(b"Candidatos", addr)
 data, addr = sock.recvfrom(1024)
 candidatos = pickle.loads(data)
 print(*candidatos)
-candidato = input("Em qual candidato deseja votar?\n")
+while True:
+    candidato = input("Em qual candidato deseja votar?\n")
 
 # envia candidato a ser votado para o servidor
 
-sock.sendto(candidato.encode('utf-8'), addr)
+    sock.sendto(candidato.encode('utf-8'), addr)
 
-# recebe a confirmação do voto
-
-data, addr = sock.recvfrom(1024)
-print(data.decode('utf-8'))
+    # recebe a confirmação do voto
+    data, addr = sock.recvfrom(1024)
+    mensagem = data.decode('utf-8')
+    if 'não está na lista' in mensagem:
+        print(mensagem)
+    else:
+        print(mensagem)
+        break
 
 sock.close()
